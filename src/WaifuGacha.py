@@ -15,5 +15,18 @@ class WaifuGacha(commands.Cog):
 
 
 
+    @commands.command(name="roll")
+    async def roll(self, context):
+        PRICE = 10
+        user_id = context.message.author.id
+        user = self.bot.get_user(user_id)
+        username = user.name
+        database_helper.adjust_pity(user_id)
+        details = database_helper.get_user_details(user_id)
+
+
+
+
+
 def setup(bot):
     bot.add_cog(WaifuGacha(bot))

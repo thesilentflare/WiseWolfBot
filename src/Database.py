@@ -19,6 +19,16 @@ def add_user(conn, userid):
     except Error as e:
         print(e)
 
+def add_inventory(conn, userid, waifu_id):
+    try:
+        c = conn.cursor()
+        sql = """INSERT INTO inventory(userid, waifu_id) VALUES($userid, $waifu_id)"""
+        placeholders = {"userid" : userid, "waifu_id" : waifu_id}
+        c.execute(sql, placeholders)
+        conn.commit()
+    except Error as e:
+        print(e)
+
 
 #################################################################
 #Main DB Setup
