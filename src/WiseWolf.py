@@ -3,6 +3,7 @@ import sys
 import signal
 import asyncio
 from discord.ext import commands
+import Database_helpers
 
 bot = commands.Bot(command_prefix='!ww ')
 token = ''
@@ -27,13 +28,13 @@ async def on_ready():
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
+    print(bot.guilds[0].id)
     print('------')
+    # Database_helpers.initialize(str(bot.guilds[0].id))
 
 @bot.command()
 async def ping(ctx):
     await ctx.send('pong')
-
-
 
 @bot.event
 async def on_message(message : str):
@@ -41,9 +42,11 @@ async def on_message(message : str):
 
     try:
         if any(s in message.content for s in banned):
-            await message.channel.send("YOOU ARE BANNED")
+            await message.channel.send("YOU ARE BANNED")
     except commands.errors.CommandNotFound:
         await bot.say("command not supported")
+
+modules = ["WaifuGacha"]
 
 if (__name__ == "__main__"):
     # amount of arguments
@@ -63,6 +66,6 @@ if (__name__ == "__main__"):
     if (token is None):
         print("Error: no token given")
         sys.exit(1)
-    for extension in extentions:
-        bot.load_extension(extension)
+    for module in modules:
+        bot.load_extension(module)
     bot.run(token)
